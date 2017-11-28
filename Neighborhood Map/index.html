@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+        <title>Collapsible sidebar using Bootstrap 3</title>
+
+         <!-- Bootstrap CSS CDN -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <!-- Our Custom CSS -->
+        <link rel="stylesheet" href="style.css">
+
+
+    </head>
+    <body>
+
+        <div class="wrapper">
+            <!-- Sidebar Holder -->
+            <nav id="sidebar">
+                <div class="sidebar-header">
+                    <h3>Bootstrap Sidebar</h3>
+                </div>
+
+                <ul class="list-unstyled components">
+                    <p>Dummy Heading</p>
+                    <li class="active">
+                        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Home</a>
+                        <ul class="collapse list-unstyled" id="homeSubmenu">
+                            <li><a href="#">Home 1</a></li>
+                            <li><a href="#">Home 2</a></li>
+                            <li><a href="#">Home 3</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">About</a>
+                        <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Pages</a>
+                        <ul class="collapse list-unstyled" id="pageSubmenu">
+                            <li><a href="#">Page 1</a></li>
+                            <li><a href="#">Page 2</a></li>
+                            <li><a href="#">Page 3</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Portfolio</a>
+                    </li>
+                    <li>
+                        <a href="#">Contact</a>
+                    </li>
+                </ul>
+
+                <ul class="list-unstyled CTAs">
+                    <li><a href="https://bootstrapious.com/tutorial/files/sidebar.zip" class="download">Download source</a></li>
+                    <li><a href="https://bootstrapious.com/p/bootstrap-sidebar" class="article">Back to article</a></li>
+                </ul>
+            </nav>
+
+            <!-- Page Content Holder -->
+            <div id="content">
+              <script>
+                var map;
+                  function initMap() {
+                    map = new google.maps.Map(document.getElementById('map'), {
+                      center: {lat: 41.853819, lng: -88.0660227},
+                     zoom: 13
+                   });
+                 }
+                 //map marker//
+                 var north = {lat: 42.0220788, lng: 87.9310099};
+                 var marker = new google.maps.Marker({
+                   position: north,
+                   map: map,
+                   title: 'Current Work Location'
+                 });
+
+
+    // script to load map API//
+
+          </script>
+
+                <script async defer
+              src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6ZWHh5NID1cxD67I8FH43LLesybdua7c&v=3&callback=initMap">
+            </script>
+
+
+                <nav class="navbar navbar-default">
+                    <div class="container-fluid">
+
+                        <div class="navbar-header">
+                            <button type="button" id="sidebarCollapse" class="navbar-btn">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </button>
+                        </div>
+
+
+                    </div>
+                </nav>
+<div id="map"></div>
+
+    </div>
+</div>
+
+
+
+
+
+        <!-- jQuery CDN -->
+         <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+         <!-- Bootstrap Js CDN -->
+         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+         <script type="text/javascript">
+             $(document).ready(function () {
+                 $('#sidebarCollapse').on('click', function () {
+                     $('#sidebar').toggleClass('active');
+                     $(this).toggleClass('active');
+                 });
+             });
+         </script>
+    </body>
+</html>
