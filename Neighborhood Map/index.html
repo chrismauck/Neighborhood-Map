@@ -51,30 +51,79 @@
 
             <!-- Page Content Holder -->
             <div id="content">
-              <script>
+              <script>                    //Loads google maps location//
                 var map;
+                var markers = [];
+
+
+
                   function initMap() {
                     map = new google.maps.Map(document.getElementById('map'), {
-                      center: {lat: 41.853819, lng: -88.0660227},
-                     zoom: 13
+                      center: {
+                        lat: 41.8333925,
+                        lng: -88.0121478
+                      },
+                     zoom: 9
                    });
-                 }
-                 //map marker//
-                 var north = {lat: 42.0221834, lng: -87.9299155};
-                 var marker = new google.maps.Marker({
-                   position: north,
-                   map: map,
-                   title: 'Current Work Location'
-                 });
+                   var locations = [
+                   {title: 'desplaines', location: {lat: 42.0221834, lng: -87.9299155}},
+                   {title: 'lisle', location: {lat: 42.0221834, lng: -87.9299155}},
+                   {title: 'ronald', location: {lat: 41.9655306, lng: -87.8118652}},
+                   {title: 'glenellyn', location: {lat: 41.8659181, lng: -82.0934054}},
+                   {title: 'lombard', location: {lat: 41.8733143, lng: -88.0894339}},
+                   {title: 'vernonhills', location: {lat: 42.2351077, lng: -87.998117}},
+                   ];
+                   var largeInfowindow = new google.maps.InfoWindow();
+
+                   var bounds = new google.maps.LatLngBounds();
+              // Use the location array to create an array of markers on init//
+              for (var i = 0; i < locations.length; i++) {
+                //get position from array//
+                var position = locations[i].location;
+                var title = locations[i].title;
+                var marker = new google.maps.Marker({
+                  position: position,
+                  title: title,
+                  animation: google.maps.Animation.Drop,
+                  icon: defaultIcon,
+                  id: i
+                });
+                //push marker to array for markers//
+                markers.push(marker);
+                //exten the boundrys of the map for each marker//
+                bounds.extend(marker.position);
+
+                //Create onclick event to open info window//
+                marker.addListener('click', function(){
+                  populateInfoWindow(this, largeInfowindow);
+                });
+              }
+              map.fitBounds(bounds);
+
+            function populateInfoWindow(marker, infowindow){
+              if (infowindow.marker != marker) {
+                infowindow.marker =marker;
+                infowindow.setContent('<div>' + marker.title +'</div>');
+                infowindow.open(map, marker);
+                infowindow.addListener('closeclick', function(){
+                infowindow.setMarker(null);
+                });
+              }
+            }
+          }
+
+
 
 
     // script to load map API//
 
           </script>
-
                 <script async defer
               src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6ZWHh5NID1cxD67I8FH43LLesybdua7c&v=3&callback=initMap">
             </script>
+
+
+
 
 
                 <nav class="navbar navbar-default">
