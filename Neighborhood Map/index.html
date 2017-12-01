@@ -85,12 +85,11 @@
                 var position = locations[i].location;
                 var title = locations[i].title;
                 var marker = new google.maps.Marker({
-                  map: map,
+                  map: map, // Fixed this SMH //
                   position: position,
                   title: title,
                   animation: google.maps.Animation.Drop,
                   id: [i]
-                //  markers[i].setmap(map);
                 });
 
                 //push marker to array for markers//
@@ -169,47 +168,3 @@
          </script>
     </body>
 </html>
-
-
-
-<!--NOVEMBER 27, 2017
-I look forward to working with you! As a mostly self-taught web developer, I took the FEND Program to fill the gaps in my knowledge and then the REACT course to learn the latest and greatest!
-6:32 pm
-We're a good match! I've relied on you to help get me this far on several occasions. I'm dedicated to getting the last two final projects completed before the next holiday. I'll be sure to reach out at the first sign of trouble...
-6:35 pm
-Glad to have you here!
-I check in here a few times a day so you can send a message here to let me know how things are going with the program – or even just say "hi! :)
-6:40 pm
-NOVEMBER 30, 2017
-WEEKLY CHECK IN
-
-What did you accomplish in the past week? What are your goals for the coming week? I would like to get the project for the neighborhood map submitter by Sunday December, 3rd.
-
-Are you currently stuck on anything? If so, what are you facing? I am currently stuck on getting the map markers to render after putting them into an array.
-1:44 pm
-Good luck with this!
-
-What have you tried so far with the markers?
-1:46 pm
-Reviewing lesson 17, and searching the web so far. I'm getting an Uncaught ReferenceError: defaultIcon is not defined. [index.html:88].
-2:56 pm
-Aha! That is probably a scope issue.
-If you can't figure it out, post a link to your GitHub repo here and I'll see if I can find it.
-2:57 pm
-https://github.com/scottarcher07/Neighborhood-Map
-3:06 pm
-Oooh! Chicago! One of my favorite places on the planet!
-I see the issues with your markers.
-First, you do not have defaultIcon defined anywhere in your code. That is why Google Maps can't find it.
-If you want to just show the default Google Maps icon, leave out the icon parameter in the maker creating object.
-And if you want to see the markers on the map, you'll need to set their map property. Google needs that to know which map to place them on.
-Try this:
-
-var marker = new google.maps.Marker({
-  position: position,
-  title: title,
-  animation: google.maps.Animation.Drop,
-  //icon: defaultIcon,
-  id: i,
-  map: map  // add map property
-}); <-
