@@ -7,8 +7,8 @@
 
          <!-- Bootstrap CSS CDN -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <!-- Our Custom CSS -->
-        <link rel="stylesheet" href="style.css">
+
+       <link rel="stylesheet" href="style.css">
 
 
     </head>
@@ -20,28 +20,35 @@
                 <div class="sidebar-header">
                     <h3>Scott Archer</h3>
                 </div>
+                <div class="container">
+                <div class="option-box">
+
+                <input id="show-locations" type="button" value="Show Locations">
+                <input id="hide-locations" type="button" value="Hide Listings">
+
 
                 <ul class="list-unstyled components">
                     <p>Places I've Worked and Lived</p>
-                    <li class="active">
-                        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Home</a>
-                        <ul class="collapse list-unstyled" id="homeSubmenu">
-                            <li><a href="#">Home 1</a></li>
-                            <li><a href="#">Home 2</a></li>
-                            <li><a href="#">Home 3</a></li>
+              <!--      <li class="active">
+                        <a href="#">Places I've Lived</a>
+                            <ul class="collapse list-unstyled" id="homeSubmenu">
+                            <li><a href="#">Home1</a></li>
+                            <li><a href="#">Home2</a></li>
+                            <li><a href="#">Home3</a></li>
                         </ul>
-                    </li>
+                    </li> -->
                     <li>
-                        <a href="#">About</a>
-                        <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Work Locations</a>
-                        <ul class="collapse list-unstyled" id="pageSubmenu">
+                        <a href="#">Places I've Worked</a>
+
+
+                    <!--    <ul class="collapse list-unstyled" id="pageSubmenu">
                             <li><a href="#">Location 1</a></li>
                             <li><a href="#">Location 2</a></li>
                             <li><a href="#">Location 3</a></li>
                         </ul>
-                    </li>
+                    </li> -->
                     <li>
-                        <a href="#">Portfolio</a>
+                        <a href="#">Places I've Lived</a>
                     </li>
                     <li>
                         <a href="#">Contact</a>
@@ -49,13 +56,13 @@
                 </ul>
             </nav>
 
-            <!-- Page Content Holder -->
+
+
+            <!-- Page Content Holder --->
             <div id="content">
               <script>                    //Loads google maps location//
                 var map;
                 var markers = [];
-
-
 
                   function initMap() {
                     map = new google.maps.Map(document.getElementById('map'), {
@@ -85,7 +92,7 @@
                 var position = locations[i].location;
                 var title = locations[i].title;
                 var marker = new google.maps.Marker({
-                  map: map, // Fixed this SMH //
+                  map: map, // Fixed this //
                   position: position,
                   title: title,
                   animation: google.maps.Animation.Drop,
@@ -94,15 +101,25 @@
 
                 //push marker to array for markers//
                 markers.push(marker);
-                //exten the boundrys of the map for each marker//
-                bounds.extend(marker.position);
 
                 //Create onclick event to open info window//
                 marker.addListener('click', function(){
                   populateInfoWindow(this, largeInfowindow);
                 });
+                marker.addListener('mouseover', function(){
+                  this.setIcon(hignlightedIcon);
+                });
+                marker.addListener('mouseout', function(){
+                  this.setIcan(defaultIcon);
+                });
               }
-              map.fitBounds(bounds);
+                document.getElementById('Show-Location').addEventListener('click', showLocation);
+                document.getElementById('Hide-Location').addEventListener('click', hideLocation);
+
+              }
+
+
+
 
             function populateInfoWindow(marker, infowindow){
               if (infowindow.marker != marker) {
@@ -111,10 +128,28 @@
                 infowindow.open(map, marker);
                 infowindow.addListener('closeclick', function(){
                 infowindow.setMarker(null);
+
+                //function to loop through markers array and render to map//
+                function showLocations() {
+                 var bounds = new google.maps.LatLngBounds();
+                  for (var i = 0; i < markers.length; i++) {
+                   markers[i].setMap(map);
+                   bounds.extend(markers[i].position);
+                }
+                   map.fitBounds(bounds);
+
+
+                 function hideLocations() {
+                   for (var i = 0; i < markers.length; i++) {
+                     markers[i].setMap(null);
+                   }
+                 }
+                }
+
                 });
               }
             }
-          }
+
 
 
 
