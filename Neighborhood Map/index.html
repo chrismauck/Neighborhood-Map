@@ -60,7 +60,8 @@
 
             <!-- Page Content Holder --->
             <div id="content">
-              <script>
+
+          <script>
                 var map;
                 var markers = [];
            //Loads google maps location//
@@ -97,7 +98,7 @@
                        animation: google.maps.Animation.Drop,
                        id: [i]
                      });
-                    }
+
                 //push marker to array of markers//
                 markers.push(marker);
                         //open info window//
@@ -107,7 +108,7 @@
               }
               document.getElementById('show-locations').addEventListener('click', showlocations);
               document.getElementById('hide-locations').addEventListener('click', hidelocations);
-
+  }
             function populateInfoWindow(marker, infowindow) {
               if (infowindow.marker != marker) {
                 infowindow.marker = marker;
@@ -130,7 +131,7 @@
                 }
                  function hidelocations() {
                    for (var i = 0; i < markers.length; i++) {
-                     markers[i].setMap(null);                   
+                     markers[i].setMap(null);
                    }
                  }
 
