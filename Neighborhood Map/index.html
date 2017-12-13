@@ -19,16 +19,17 @@
             <nav id="sidebar">
                 <div class="sidebar-header">
                     <h3>Scott Archer</h3>
+                    <h5>Places I've Worked and Lived</h5>
                 </div>
                 <div class="container">
                 <div class="option-box">
 
-                <input id="show-locations" type="button" value="Show Locations">
-                <input id="hide-locations" type="button" value="Hide Listings">
+                <input id="show-locations" type="button" value="showlocations">
+                <input id="hide-locations" type="button" value="hidelocations">
 
 
-                <ul class="list-unstyled components">
-                    <p>Places I've Worked and Lived</p>
+
+                <div class="list-unstyled components">
                    <li class="active">
                         <a href="#">Places I've Lived</a>
                       <!--  To Do : make this a dropdown
@@ -38,7 +39,7 @@
                             <li><a href="#">Home3</a></li>
                         </ul>
                       -->
-                    <li>
+                    </div>
                         <a href="#">Places I've Worked</a>
 
                         <!-- To Do : I Want to make this a dropdown
@@ -59,18 +60,19 @@
 
             <!-- Page Content Holder --->
             <div id="content">
-              <script>                    //Loads google maps location//
+              <script>
                 var map;
                 var markers = [];
-
+           //Loads google maps location//
                   function initMap() {
                     map = new google.maps.Map(document.getElementById('map'), {
                       center: {
                         lat: 41.8333925,
                         lng: -88.0121478
                       },
-                     zoom: 13
+                     zoom: 9
                    });
+
                    var locations = [
                    {title: 'Des Plaines', location: {lat: 42.0221834, lng: -87.9299155}},
                    {title: 'Lisle', location: {lat: 41.7894616, lng: -88.1188675}},
@@ -80,75 +82,57 @@
                    {title: 'Vernon Hills', location: {lat: 42.2351077, lng: -87.998117}},
                    {title: 'Chicago', location: {lat: 41.884104, lng: -87.6369619}},
                    ];
+
                    var largeInfowindow = new google.maps.InfoWindow();
-
                    var bounds = new google.maps.LatLngBounds();
-
-
 
               for (var i = 0; i < locations.length; i++) {
                 //get position from array//
-                var position = locations[i].location;
-                var title = locations[i].title;
-                var marker = new google.maps.Marker({
-                  map: map, // Fixed this //
-                  position: position,
-                  title: title,
-                  animation: google.maps.Animation.Drop,
-                  id: [i]
-                });
-
-                //push marker to array for markers//
+                   var position = locations[i].location;
+                   var title = locations[i].title;
+                   var marker = new google.maps.Marker({
+                       map: map, // Fixed this //
+                       position: position,
+                       title: title,
+                       animation: google.maps.Animation.Drop,
+                       id: [i]
+                     });
+                    }
+                //push marker to array of markers//
                 markers.push(marker);
-
-                //Create onclick event to open info window//
+                        //open info window//
                 marker.addListener('click', function(){
                   populateInfoWindow(this, largeInfowindow);
                 });
-                marker.addListener('mouseover', function(){
-                  this.setIcon(hignlightedIcon);
-                });
-                marker.addListener('mouseout', function(){
-                  this.setIcan(defaultIcon);
-                });
               }
-                document.getElementById('Show-Location').addEventListener('click', showLocation);
-                document.getElementById('Hide-Location').addEventListener('click', hideLocation);
+              document.getElementById('show-locations').addEventListener('click', showLocations);
+              document.getElementById('hide-locations').addEventListener('click', showLocations);
 
-              }
-
-
-
-
-            function populateInfoWindow(marker, infowindow){
+            function populateInfoWindow(marker, infowindow) {
               if (infowindow.marker != marker) {
-                infowindow.marker =marker;
+                infowindow.marker = marker;
                 infowindow.setContent('<div>' + marker.title +'</div>');
                 infowindow.open(map, marker);
                 infowindow.addListener('closeclick', function(){
-                infowindow.setMarker(null);
+                infowindow.marker = null;
+              });
+            }
+          }
 
-                //function to loop through markers array and render to map//
+        //function to loop through markers array and render to map//
                 function showLocations() {
                  var bounds = new google.maps.LatLngBounds();
                   for (var i = 0; i < markers.length; i++) {
                    markers[i].setMap(map);
                    bounds.extend(markers[i].position);
+                 }
+                  map.fitBounds(bounds);
                 }
-                   map.fitBounds(bounds);
-
-
-                 function hideLocations() {
+                 function hidelocations() {
                    for (var i = 0; i < markers.length; i++) {
                      markers[i].setMap(null);
                    }
                  }
-                }
-
-                });
-              }
-            }
-
 
 
 
@@ -160,10 +144,6 @@
               src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6ZWHh5NID1cxD67I8FH43LLesybdua7c&v=3&callback=initMap">
             </script>
 
-
-
-
-
                 <nav class="navbar navbar-default">
                     <div class="container-fluid">
 
@@ -173,19 +153,13 @@
                                 <span></span>
                                 <span></span>
                             </button>
+                          </div>
                         </div>
-
-
-                    </div>
-                </nav>
-<div id="map"></div>
+                      </nav>
+                          <div id="map"></div>
 
     </div>
 </div>
-
-
-
-
 
         <!-- jQuery CDN -->
          <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
