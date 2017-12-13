@@ -105,8 +105,8 @@
                   populateInfoWindow(this, largeInfowindow);
                 });
               }
-              document.getElementById('show-locations').addEventListener('click', showLocations);
-              document.getElementById('hide-locations').addEventListener('click', showLocations);
+              document.getElementById('show-locations').addEventListener('click', showlocations);
+              document.getElementById('hide-locations').addEventListener('click', hidelocations);
 
             function populateInfoWindow(marker, infowindow) {
               if (infowindow.marker != marker) {
@@ -120,7 +120,7 @@
           }
 
         //function to loop through markers array and render to map//
-                function showLocations() {
+                function showlocations() {
                  var bounds = new google.maps.LatLngBounds();
                   for (var i = 0; i < markers.length; i++) {
                    markers[i].setMap(map);
@@ -130,7 +130,7 @@
                 }
                  function hidelocations() {
                    for (var i = 0; i < markers.length; i++) {
-                     markers[i].setMap(null);
+                     markers[i].setMap(null);                   
                    }
                  }
 

@@ -25,7 +25,7 @@ a, a:hover, a:focus {
 
 .navbar {
     padding: 15px 10px;
-    background: #fff;
+    background: #444;
     border: none;
     border-radius: 0;
     margin-bottom: 40px;
@@ -133,10 +133,6 @@ ul.CTAs a {
     margin-bottom: 5px;
 }
 
-a.download {
-    background: #fff;
-    color: #7386D5;
-}
 
 a.article, a.article:hover {
     background: #6d7fcc !important;
