@@ -24,8 +24,8 @@
                 <div class="container">
                 <div class="option-box">
 
-                <input id="show-locations" type="button" value="showlocations">
-                <input id="hide-locations" type="button" value="hidelocations">
+                <input id="show-locations" type="button" value="show locations">
+                <input id="hide-locations" type="button" value="hide locations">
 
 
 
@@ -104,6 +104,7 @@
                         //open info window//
                 marker.addListener('click', function(){
                   populateInfoWindow(this, largeInfowindow);
+
                 });
               }
               document.getElementById('show-locations').addEventListener('click', showlocations);
@@ -119,6 +120,32 @@
               });
             }
           }
+                var streetViewService = new google.maps.streetViewService();
+                var radius = 50;
+
+                function getStreetView(data, status) {
+                  if (status == google.maps.StreetViewStatus.OK){
+                    var nearStreetViewLocation = data.location.latLng;
+                    var heading = google.maps.geometry.spherical.computeHeading(
+                      nearStreetViewLocation, marker.position);
+                      infowindow.setContent('<div>' + marker.title + '</div><div id="pano"></div>');
+                      var panoramaOptipons = {
+                        position: nearStreetViewLocation,
+                        pov: {
+                          heading: heading,
+                          pitch: 30
+                        }
+                      };
+                      var panorama = new google.maps.StreetViewPanorama(
+                        document.getElementById('pano'), panoramaOptipons);
+                      } else {
+                        infowindow.setContent('<div>' + marker.title + '</div>' + '<div>No Street View Found</div>');
+                      }
+                    }
+
+                streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
+                infowindow.open(map, marker);
+
 
         //function to loop through markers array and render to map//
                 function showlocations() {
@@ -134,16 +161,11 @@
                      markers[i].setMap(null);
                    }
                  }
+    </script>             
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?libraries=geometry&key=AIzaSyASuEpaReQgwTJ5_Ud7zAxNc8yO-YBfz4Y&v=3&callback=initMap">
+    </script>
 
-
-
-
-    // script to load map API//
-
-          </script>
-                <script async defer
-              src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6ZWHh5NID1cxD67I8FH43LLesybdua7c&v=3&callback=initMap">
-            </script>
 
                 <nav class="navbar navbar-default">
                     <div class="container-fluid">
