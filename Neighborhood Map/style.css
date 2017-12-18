@@ -156,6 +156,11 @@ a.article, a.article:hover {
   transition: all 0.3s;
 }
 
+#pano {
+  height: 250px;
+  width: 350px;
+}
+
 #sidebarCollapse {
     width: 40px;
     height: 40px;
