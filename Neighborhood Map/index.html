@@ -78,7 +78,7 @@
                    {title: 'Des Plaines', location: {lat: 42.0221834, lng: -87.9299155}},
                    {title: 'Lisle', location: {lat: 41.7894616, lng: -88.1188675}},
                    {title: 'Harwood Heights', location: {lat: 41.9655306, lng: -87.8118652}},
-                   {title: 'Glen Ellyn', location: {lat: 41.8659181, lng: -88.0934054}},
+                   {title: 'Glen Ellyn', location: {lat: 41.8538231, lng: -88.0660227}},
                    {title: 'Lombard', location: {lat: 41.8733143, lng: -88.0894339}},
                    {title: 'Vernon Hills', location: {lat: 42.2351077, lng: -87.998117}},
                    {title: 'Chicago', location: {lat: 41.884104, lng: -87.6369619}},
@@ -109,7 +109,7 @@
               }
               document.getElementById('show-locations').addEventListener('click', showlocations);
               document.getElementById('hide-locations').addEventListener('click', hidelocations);
-  }
+            }
             function populateInfoWindow(marker, infowindow) {
               if (infowindow.marker != marker) {
                 infowindow.marker = marker;
@@ -118,13 +118,13 @@
                 infowindow.addListener('closeclick', function(){
                 infowindow.marker = null;
               });
-            }
-          }
-                var streetViewService = new google.maps.streetViewService();
+
+
+                var streetViewService = new google.maps.StreetViewService();
                 var radius = 50;
 
                 function getStreetView(data, status) {
-                  if (status == google.maps.StreetViewStatus.OK){
+                  if (status == google.maps.StreetViewStatus.OK) {
                     var nearStreetViewLocation = data.location.latLng;
                     var heading = google.maps.geometry.spherical.computeHeading(
                       nearStreetViewLocation, marker.position);
@@ -135,6 +135,7 @@
                           heading: heading,
                           pitch: 30
                         }
+
                       };
                       var panorama = new google.maps.StreetViewPanorama(
                         document.getElementById('pano'), panoramaOptipons);
@@ -145,8 +146,8 @@
 
                 streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
                 infowindow.open(map, marker);
-
-
+              }
+            }
         //function to loop through markers array and render to map//
                 function showlocations() {
                  var bounds = new google.maps.LatLngBounds();
@@ -161,9 +162,10 @@
                      markers[i].setMap(null);
                    }
                  }
-    </script>             
+
+    </script>
     <script async defer
-    src="https://maps.googleapis.com/maps/api/js?libraries=geometry&key=AIzaSyASuEpaReQgwTJ5_Ud7zAxNc8yO-YBfz4Y&v=3&callback=initMap">
+    src="https://maps.googleapis.com/maps/api/js?libraries=geometry&key=AIzaSyD6ZWHh5NID1cxD67I8FH43LLesybdua7c&v=3&callback=initMap">
     </script>
 
 
