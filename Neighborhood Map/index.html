@@ -7,13 +7,10 @@
 
          <!-- Bootstrap CSS CDN -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
-       <link rel="stylesheet" href="style.css">
-
+        <link rel="stylesheet" href="style.css">
 
     </head>
-    <body>
-
+        <body>
         <div class="wrapper">
             <!-- Sidebar Holder -->
             <nav id="sidebar">
@@ -22,34 +19,28 @@
                     <h5>Places I've Worked and Lived</h5>
                 </div>
                 <div class="container">
-                <div class="option-box">
+                <div class="navbar-btn">
 
                 <input id="show-locations" type="button" value="show locations">
                 <input id="hide-locations" type="button" value="hide locations">
 
 
 
-                <div class="list-unstyled components">
-                   <li class="active">
-                        <a href="#">Places I've Lived</a>
-                      <!--  To Do : make this a dropdown
+                <ul class="list-unstyled component">
+                        <li class="active">
+                            <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Home</a>
                             <ul class="collapse list-unstyled" id="homeSubmenu">
-                            <li><a href="#">Home1</a></li>
-                            <li><a href="#">Home2</a></li>
-                            <li><a href="#">Home3</a></li>
-                        </ul>
-                      -->
-                    </div>
-                        <a href="#">Places I've Worked</a>
+                            <li><a href="#">My Family</a></li>
 
-                        <!-- To Do : I Want to make this a dropdown
+                        </ul>
+                          <li>
+                            <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Work</a>
                             <ul class="collapse list-unstyled" id="pageSubmenu">
-                            <li><a href="#">Location 1</a></li>
-                            <li><a href="#">Location 2</a></li>
-                            <li><a href="#">Location 3</a></li>
+                            <li><a href="#">My Work</a></li>
+
                         </ul>
                     </li>
-              -->
+
                     <li>
                         <a href="#">Contact</a>
                     </li>
@@ -72,11 +63,12 @@
                         lng: -88.0121478
                       },
                      zoom: 9
+
                    });
 
                    var locations = [
-                   {title: 'Des Plaines Work Location', location: {lat: 42.0228132, lng: -87.9284833}},
-                   {title: 'Lisle Work Location', location: {lat: 41.9665649, lng: -87.8038933}},
+                   {title: 'Des Plaines', location: {lat: 42.0228132, lng: -87.9284833}},
+                   {title: 'Lisle', location: {lat: 41.9665649, lng: -87.8038933}},
                    {title: 'Harwood Heights', location: {lat: 41.9661792, lng: -87.8038933,}},
                    {title: 'Glen Ellyn', location: {lat: 41.8535493, lng: -88.063832}},
                    {title: 'Lombard', location: {lat: 41.8565625, lng: -88.0036689}},
@@ -87,6 +79,9 @@
                    var largeInfowindow = new google.maps.InfoWindow();
                    var bounds = new google.maps.LatLngBounds();
 
+                   var defaultIcon = makeMarkerIcon('0091ff')
+                   var hignlightedIcon = makeMarkerIcon('ffff24')
+
               for (var i = 0; i < locations.length; i++) {
                 //get position from array//
                    var position = locations[i].location;
@@ -95,7 +90,8 @@
                        map: map, // Fixed this //
                        position: position,
                        title: title,
-                       animation: google.maps.Animation.Drop,
+                       animation: google.maps.Animation.DROP,
+                       icon: defaultIcon,
                        id: [i]
                      });
 
@@ -104,12 +100,23 @@
                         //open info window//
                 marker.addListener('click', function(){
                   populateInfoWindow(this, largeInfowindow);
-
+                });
+               marker.addListener('mouseover', function() {
+                 this.setIcon(highlightedIcon);
+                });
+               marker.addListener('mouseout', function() {
+                  this.setIcon(defaultIcon);
                 });
               }
+
+
+
+
               document.getElementById('show-locations').addEventListener('click', showlocations);
               document.getElementById('hide-locations').addEventListener('click', hidelocations);
+
             }
+
             function populateInfoWindow(marker, infowindow) {
               if (infowindow.marker != marker) {
                 infowindow.marker = marker;
@@ -160,6 +167,15 @@
                  function hidelocations() {
                    for (var i = 0; i < markers.length; i++) {
                      markers[i].setMap(null);
+                   }
+                   function makeMarkerIcon(markerColor) {
+                     var markerImage = new google.maps.MarkerImage(
+                     'http://chart.googleeapis.com/chart?chst=d_map_spin&chld=1.15|0|'+ markerColor + '|40|_|%E2%80%A2',
+                     new google.maps.Size(21, 34),
+                     new google.maps.Point(0, 0),
+                     new google.maps.Point(10, 34),
+                     new google.maps.Size(21, 34));
+                     return markerImage;
                    }
                  }
 
