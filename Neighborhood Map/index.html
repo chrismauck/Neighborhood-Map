@@ -49,72 +49,69 @@
 
 
 
-            <!-- Page Content Holder --->
+            <!-- Page Content Holder -->
             <div id="content">
 
           <script>
-                var map;
-                var markers = [];
-           //Loads google maps location//
-                  function initMap() {
-                    map = new google.maps.Map(document.getElementById('map'), {
-                      center: {
-                        lat: 41.8333925,
-                        lng: -88.0121478
-                      },
-                     zoom: 9
+            var map;
+            var markers = [];
+            //Loads google maps location//
+            function initMap() {
+                map = new google.maps.Map(document.getElementById('map'), {
+                  center: {
+                    lat: 41.8333925,
+                    lng: -88.0121478
+                  },
+                 zoom: 9
+               });
 
-                   });
+              var locations = [
+                {title: 'Des Plaines', location: {lat: 42.0228132, lng: -87.9284833}},
+                {title: 'Lisle', location: {lat: 41.9665649, lng: -87.8038933}},
+                {title: 'Harwood Heights', location: {lat: 41.9661792, lng: -87.8038933,}},
+                {title: 'Glen Ellyn', location: {lat: 41.8535493, lng: -88.063832}},
+                {title: 'Lombard', location: {lat: 41.8565625, lng: -88.0036689}},
+                {title: 'Vernon Hills', location: {lat: 42.2507524, lng:-87.96064}},
+                {title: 'Chicago', location: {lat: 41.8844626, lng: -87.6349813}}
+              ];
 
-                   var locations = [
-                   {title: 'Des Plaines', location: {lat: 42.0228132, lng: -87.9284833}},
-                   {title: 'Lisle', location: {lat: 41.9665649, lng: -87.8038933}},
-                   {title: 'Harwood Heights', location: {lat: 41.9661792, lng: -87.8038933,}},
-                   {title: 'Glen Ellyn', location: {lat: 41.8535493, lng: -88.063832}},
-                   {title: 'Lombard', location: {lat: 41.8565625, lng: -88.0036689}},
-                   {title: 'Vernon Hills', location: {lat: 42.2507524, lng:-87.96064}},
-                   {title: 'Chicago', location: {lat: 41.8844626, lng: -87.6349813}},
-                   ];
+              var largeInfowindow = new google.maps.InfoWindow();
+              var bounds = new google.maps.LatLngBounds();
+              console.log(largeInfowindow);
 
-                   var largeInfowindow = new google.maps.InfoWindow();
-                   var bounds = new google.maps.LatLngBounds();
-
-                   var defaultIcon = makeMarkerIcon('0091ff')
-                   var hignlightedIcon = makeMarkerIcon('ffff24')
+              var defaultIcon = makeMarkerIcon('0091ff');
+              var highlightedIcon = makeMarkerIcon('ffff24');
 
               for (var i = 0; i < locations.length; i++) {
                 //get position from array//
-                   var position = locations[i].location;
-                   var title = locations[i].title;
-                   var marker = new google.maps.Marker({
-                       map: map, // Fixed this //
-                       position: position,
-                       title: title,
-                       animation: google.maps.Animation.DROP,
-                       icon: defaultIcon,
-                       id: [i]
-                     });
+                var position = locations[i].location;
+                var title = locations[i].title;
+                console.log(position + ' : ' + title);
+                var marker = new google.maps.Marker({
+                  map: map, // Fixed this //
+                  position: position,
+                  title: title,
+                  animation: google.maps.Animation.DROP,
+                  icon: defaultIcon,
+                  id: 'a'+i
+                });
 
                 //push marker to array of markers//
                 markers.push(marker);
-                        //open info window//
+                //open info window//
                 marker.addListener('click', function(){
                   populateInfoWindow(this, largeInfowindow);
                 });
-               marker.addListener('mouseover', function() {
-                 this.setIcon(highlightedIcon);
+                marker.addListener('mouseover', function() {
+                  this.setIcon(highlightedIcon);
                 });
-               marker.addListener('mouseout', function() {
+                marker.addListener('mouseout', function() {
                   this.setIcon(defaultIcon);
                 });
               }
 
-
-
-
               document.getElementById('show-locations').addEventListener('click', showlocations);
               document.getElementById('hide-locations').addEventListener('click', hidelocations);
-
             }
 
             function populateInfoWindow(marker, infowindow) {
@@ -123,8 +120,8 @@
                 infowindow.setContent('<div>' + marker.title +'</div>');
                 infowindow.open(map, marker);
                 infowindow.addListener('closeclick', function(){
-                infowindow.marker = null;
-              });
+                  infowindow.marker = null;
+                });
 
 
                 var streetViewService = new google.maps.StreetViewService();
@@ -133,8 +130,7 @@
                 function getStreetView(data, status) {
                   if (status == google.maps.StreetViewStatus.OK) {
                     var nearStreetViewLocation = data.location.latLng;
-                    var heading = google.maps.geometry.spherical.computeHeading(
-                      nearStreetViewLocation, marker.position);
+                    var heading = google.maps.geometry.spherical.computeHeading(nearStreetViewLocation, marker.position);
                       infowindow.setContent('<div>' + marker.title + '</div><div id="pano"></div>');
                       var panoramaOptipons = {
                         position: nearStreetViewLocation,
@@ -142,42 +138,40 @@
                           heading: heading,
                           pitch: 25
                         }
-
                       };
-                      var panorama = new google.maps.StreetViewPanorama(
-                        document.getElementById('pano'), panoramaOptipons);
-                      } else {
-                        infowindow.setContent('<div>' + marker.title + '</div>' + '<div>No Street View Found</div>');
-                      }
-                    }
+                      var panorama = new google.maps.StreetViewPanorama(document.getElementById('pano'), panoramaOptipons);
+                  } else {
+                    infowindow.setContent('<div>' + marker.title + '</div>' + '<div>No Street View Found</div>');
+                  }
+                }
 
                 streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
                 infowindow.open(map, marker);
               }
             }
+
         //function to loop through markers array and render to map//
-                function showlocations() {
-                 var bounds = new google.maps.LatLngBounds();
-                  for (var i = 0; i < markers.length; i++) {
-                   markers[i].setMap(map);
-                   bounds.extend(markers[i].position);
-                 }
-                  map.fitBounds(bounds);
-                }
-                 function hidelocations() {
-                   for (var i = 0; i < markers.length; i++) {
-                     markers[i].setMap(null);
-                   }
-                   function makeMarkerIcon(markerColor) {
-                     var markerImage = new google.maps.MarkerImage(
-                     'http://chart.googleeapis.com/chart?chst=d_map_spin&chld=1.15|0|'+ markerColor + '|40|_|%E2%80%A2',
-                     new google.maps.Size(21, 34),
-                     new google.maps.Point(0, 0),
-                     new google.maps.Point(10, 34),
-                     new google.maps.Size(21, 34));
-                     return markerImage;
-                   }
-                 }
+            function showlocations() {
+              var bounds = new google.maps.LatLngBounds();
+              for (var i = 0; i < markers.length; i++) {
+                markers[i].setMap(map);
+                bounds.extend(markers[i].position);
+              }
+              map.fitBounds(bounds);
+            }
+            function hidelocations() {
+              for (var i = 0; i < markers.length; i++) {
+                markers[i].setMap(null);
+              }
+            }
+            function makeMarkerIcon(markerColor) {
+              var markerImage = new google.maps.MarkerImage('https://chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|'+ markerColor + '|40|_|%E2%80%A2',
+                new google.maps.Size(21, 34),
+                new google.maps.Point(0, 0),
+                new google.maps.Point(10, 34),
+                new google.maps.Size(21, 34));
+               return markerImage;
+            }
 
     </script>
     <script async defer
