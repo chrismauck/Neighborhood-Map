@@ -1,0 +1,230 @@
+
+/* Dropdown Button */
+
+html, body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    margin: 0;
+    padding: 0;
+}
+
+/* fixed width for the entire menu */
+.navigation {
+    width: 220px;
+}
+
+.container {
+    display: block;
+    width: 233px;
+    float: left;
+}
+
+/* remove bullet points and padding */
+.mainmenu, .submenu, .submenu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* make ALL links have padding and background color */
+.mainmenu a {
+    display: block;
+    /*width: 75%;*/
+    background-color: #fff;
+    text-decoration: none;
+    padding: 10px;
+    color: #000;
+}
+
+/* add hover behaviour */
+.mainmenu a:hover {
+    background-color: #C5C5C5;
+}
+
+.locationType > span {
+    position: relative;
+    display: block;
+    font-size: 16px;
+    color: #fff;
+    line-height: 32px;
+    background-color: #227cc3;
+    padding: 0 10px;
+    /*margin-bottom: 8px;*/
+}
+
+#loclist,
+#loclist2 {
+    margin-bottom: 14px;
+}
+#loclist li,
+#loclist2 li {
+    padding-left: 11px;
+}
+    .listitem {
+        line-height: 34px;
+    }
+
+    .listitem:hover {
+        background-color: #d2ebff;
+    }
+
+        .listitem.activeItem,
+        .listitem.activeItem:hover {
+            background-color: #c0ffd1;
+            font-style: italic;
+        }
+
+    .listitem span {
+        display: block;
+        cursor: pointer;
+    }
+
+/* when hovering display the submenu. Changed the submenu's max-height from 0 to 400px;
+*/
+
+.mainmenu li:hover .submenu {
+  display: block;
+  /*max-height: 400px;*/
+}
+
+/* overwrites the background-color for .submenu
+  CSS reads down the page, so code at the bottom will overwrite the code at the top.
+*/
+
+.submenu a {
+    background-color: #999;
+}
+
+/* hover behaviour for links inside .submenu */
+.submenu a:hover {
+    background-color: #666;
+}
+
+/* this is the initial state of all submenus. */
+.submenu {
+    overflow: hidden;
+    /*max-height: 0;*/
+    -webkit-transition: all 0.5s ease-out;
+}
+
+#map {
+    bottom:0px;
+    height:100%;
+    left: 233px;
+    position: absolute;
+    z-index: 3;
+    right: 0px;
+}
+
+#pano {
+    height: 250px;
+    width: 350px;
+}
+
+.locationName {
+    position: relative;
+    display: block;
+    font-size: 15px;
+    font-weight: bold;
+    line-height: 24px;
+}
+
+    .locationName span {
+        position: relative;
+        display: inline-block;
+        font-weight: normal;
+        color: #227cc3;
+    }
+
+#showHide {
+    margin-left: 10px;
+}
+
+/* button styles borrowed from bootstrap */
+
+.btn {
+  display: inline-block;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+      touch-action: manipulation;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+.btn:focus,
+.btn:active:focus,
+.btn.active:focus,
+.btn.focus,
+.btn:active.focus,
+.btn.active.focus {
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+.btn:hover,
+.btn:focus,
+.btn.focus {
+  color: #333;
+  text-decoration: none;
+}
+.btn:active,
+.btn.active {
+  background-image: none;
+  outline: 0;
+  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+          box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+}
+.btn-default {
+  color: #333;
+  background-color: #fff;
+  border-color: #ccc;
+}
+.btn-default:focus,
+.btn-default.focus {
+  color: #333;
+  background-color: #e6e6e6;
+  border-color: #8c8c8c;
+}
+.btn-default:hover {
+  color: #333;
+  background-color: #e6e6e6;
+  border-color: #adadad;
+}
+.btn-default:active,
+.btn-default.active,
+.open > .dropdown-toggle.btn-default {
+  color: #333;
+  background-color: #e6e6e6;
+  border-color: #adadad;
+}
+.btn-default:active:hover,
+.btn-default.active:hover,
+.open > .dropdown-toggle.btn-default:hover,
+.btn-default:active:focus,
+.btn-default.active:focus,
+.open > .dropdown-toggle.btn-default:focus,
+.btn-default:active.focus,
+.btn-default.active.focus,
+.open > .dropdown-toggle.btn-default.focus {
+  color: #333;
+  background-color: #d4d4d4;
+  border-color: #8c8c8c;
+}
+.btn-default:active,
+.btn-default.active,
+.open > .dropdown-toggle.btn-default {
+  background-image: none;
+}
+
+

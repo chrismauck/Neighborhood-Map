@@ -1,2 +1,0 @@
-# Neighborhood-Map
-Udacity Project
