@@ -126,6 +126,8 @@ html, body {
     top: 2px;
     right: 20px;
     font-size: 14px;
+    width: 170px;
+    text-align: right;
 }
 
 .locationName {
