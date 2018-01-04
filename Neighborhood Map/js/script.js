@@ -22,17 +22,9 @@ var locations = [
     },
     {
         category: 'Work',
-        title: 'Lisle',
-        location: {
-            lat: 41.9665649,
-            lng: -87.8038933
-        }
-    },
-    {
-        category: 'Work',
         title: 'Harwood Heights',
         location: {
-            lat: 41.9561792,
+            lat: 41.9661792,
             lng: -87.8038933
         }
     },
@@ -66,6 +58,8 @@ var infowindowDefault = '<div style="width: 100px; height: 60px;"><p style="text
 
 var openWindow = false;
 
+var infowindowContent = 'Error';
+
 // setting up viewmodel
 var ViewModel = function() {
     // assign self to this perimeter so we can easily point objects to viewmodel
@@ -90,7 +84,7 @@ var ViewModel = function() {
             if (status == google.maps.StreetViewStatus.OK) {
                 var nearStreetViewLocation = data.location.latLng;
                 var heading = google.maps.geometry.spherical.computeHeading(nearStreetViewLocation, location.marker.position);
-                self.infowindow.setContent('<div class="locationName"><span>' + location.cat() + ':</span> ' + location.name() + '</div><div id="pano"></div>');
+                self.infowindow.setContent('<div class="locationName"><span>' + location.cat() + ':</span> ' + location.name() + '</div>'+infowindowContent+'<div id="pano"></div>');
                 var panoramaOptipons = {
                     position: nearStreetViewLocation,
                     pov: {
@@ -100,7 +94,7 @@ var ViewModel = function() {
                 };
                 var panorama = new google.maps.StreetViewPanorama(document.getElementById('pano'), panoramaOptipons);
             } else {
-                self.infowindow.setContent('<div class="locationName">' + location.cat() + ':</span> ' + location.name() + '</div>' + '<div>No Street View Found</div>');
+                self.infowindow.setContent('<div class="locationName">' + location.cat() + ':</span> ' + location.name() + '</div>'+infowindowContent+'<div>No Street View Found</div>');
             }
         }
         streetViewService.getPanoramaByLocation(location.marker.position, radius, getStreetView);
@@ -110,6 +104,34 @@ var ViewModel = function() {
     self.infowindow = new google.maps.InfoWindow({
         content: infowindowDefault
     });
+
+    self.weather = function(location) {
+        var weatherURL = 'http://api.openweathermap.org/data/2.5/weather?lat=' + location.latLng.lat + '&lon=' + location.latLng.lng + '&units=imperial&APPID=24fe1091a58e1b8c1660ac9a7c2965c0';
+        // create settings object for ajax call
+        var settings = {
+            url: weatherURL,
+            // set infowindow content to say the provided string when error is thrown
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                infowindowContent = '<div class="weatherBug">OpenWeatherMap Error</div>';
+            },
+            // what ajax function should do when the http request works fine
+            success: function(results) {
+                // an object to store the relevant information that returned from JSON
+                var context = {
+                    temp: Math.round(results.main.temp),
+                    pressure: results.main.pressure,
+                    humidity: results.main.humidity,
+                    status: results.weather[0].main,
+                    desc: results.weather[0].description
+                };
+                // self.infowindow.setContent(html);
+                infowindowContent = '<div class="weatherBug" id="weather'+location.name()+'">'+context.status+', '+context.temp+'&deg;F</div>';
+                // return weather;
+            }
+        };
+        // call ajax function
+        $.ajax(settings);
+    }
 
     // this function is for displaying infowindow on clicked objects
     self.infoWindowMessage = function(location) {
@@ -131,9 +153,11 @@ var ViewModel = function() {
             // setTimeout (function(){
             //     location.marker.setAnimation(null);
             // }, 700);
+        self.weather(location);
 
         // populate infowindow
         self.populateInfoWindow(location);
+
 
         // update the activeWindow variable on the location to assist in hinting, etc
         location.activeWindow("true");
@@ -177,6 +201,7 @@ var ViewModel = function() {
         google.maps.event.addListener(self.infowindow, 'closeclick', (function(){
             return function(){
                 location.activeWindow("false");
+                infowindowContent = '';
                 // reset all other markers to default red
                 for (var j = 0; j < locations.length; j++) {
                     self.locationList()[j].marker.setIcon("https://maps.gstatic.com/mapfiles/ms2/micons/red-dot.png");
