@@ -109,18 +109,13 @@ var viewModel = function() {
 
     // CALL OPENWEATHERMAP API
     self.weather = function(location) {
-        var weatherURL = 'http://api.openweathermap.org/data/2.5/weather?lat=' + location.latLng.lat + '&lon=' + location.latLng.lng + '&units=imperial&APPID=24fe1091a58e1b8c1660ac9a7c2965c0';
+        var weatherURL = 'http://api.openweathermap.org/data/2.5/weather?lat=' + location.latLng.lat + '&lon=' + location.latLng.lng + '&units=imperial&APPID=24fe1091a58e1b8c1660ac9a7c2965c0-';
         // create settings object for ajax call
-        var settings = {
-            url: weatherURL,
-            // set infowindow content to say the provided string when error is thrown
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                alert("Opps");
-                // infowindowContent = '<div class="weatherBug">OpenWeatherMap Error</div>';
-            },
-            // what ajax function should do when the http request works fine
-            success: function(results) {
-                // an object to store the relevant information that returned from JSON
+        // var settings = {
+        $.ajax({
+            url: weatherURL
+        })
+            .done(function(results){
                 var context = {
                     temp: Math.round(results.main.temp),
                     pressure: results.main.pressure,
@@ -131,11 +126,33 @@ var viewModel = function() {
                 // self.infowindow.setContent(html);
                 // infowindowContent = '<div class="weatherBug" id="weather'+location.name()+'">'+context.status+', '+context.temp+'&deg;F</div>';
                 self.weatherData='<div class="weatherBug" id="weather'+location.name()+'">'+context.status+', '+context.temp+'&deg;F</div>';
-                // return weather;
-            }
-        };
+            })
+            .fail(function(XMLHttpRequest, textStatus, errorThrown) {
+                alert("Opps " + errorThrown + ' ' + textStatus);
+            });
+            // set infowindow content to say the provided string when error is thrown
+        //     error: function(XMLHttpRequest, textStatus, errorThrown) {
+        //         alert("Opps");
+        //         // infowindowContent = '<div class="weatherBug">OpenWeatherMap Error</div>';
+        //     },
+        //     // what ajax function should do when the http request works fine
+        //     success: function(results) {
+        //         // an object to store the relevant information that returned from JSON
+        //         var context = {
+        //             temp: Math.round(results.main.temp),
+        //             pressure: results.main.pressure,
+        //             humidity: results.main.humidity,
+        //             status: results.weather[0].main,
+        //             desc: results.weather[0].description
+        //         };
+        //         // self.infowindow.setContent(html);
+        //         // infowindowContent = '<div class="weatherBug" id="weather'+location.name()+'">'+context.status+', '+context.temp+'&deg;F</div>';
+        //         self.weatherData='<div class="weatherBug" id="weather'+location.name()+'">'+context.status+', '+context.temp+'&deg;F</div>';
+        //         // return weather;
+        //     }
+        // };
         // call ajax function
-        $.ajax(settings);
+        // $.ajax(settings);
     }
 
     // DISPLAY infowindow ON CLICKED OBJECTS/LOCATION LIST
@@ -304,7 +321,9 @@ var locales = function(data) {
         }
     };
 }
-
+function mapError() {
+    alert("Google Maps has failed to load. Please check your internet connection and try again.");
+}
 
 // INITIALIZE MAP
 function initMap() {
