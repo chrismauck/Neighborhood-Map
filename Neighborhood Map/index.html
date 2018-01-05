@@ -7,9 +7,10 @@
     <link rel="stylesheet" href="css/styles.css">
     <title> Places I've worked and lived </title>
 </head>
-    <!-- this is a test for sidebar-->
 
-<body>
+<body data-bind="css: { showList: activeList() == true }">
+    <button id="locationButton" class="btn btn-default" data-bind="click: toggleClass">Locations</button>
+    <button id="hideLocationButton" class="btn btn-default" data-bind="click: toggleClass">X</button>
     <div class="container">
         <ul class="mainmenu">
             <li>
@@ -40,13 +41,10 @@
                 </ul>
             </li>
         </ul>
-<!--         <input id="show-locations" type="button" value="Show Locations">
-        <input id="hide-locations" type="button" value="Hide Locations"> -->
+        <!-- This is not complete. Button action should change a boolean, show/hide map markers, and update button text from "Hide" to "Show" -->
         <!-- <button id="showHide" class="btn btn-default" data-bind="click: $parent.buttonActions">Hide Locations</button> -->
     </div>
 
-    <!-- this is the end of the test-->
-    </script>
     <div id="map"></div>
     <script src="js/jquery-1.11.3.min.js"></script>
     <script src="js/knockout-3.4.0.js"></script>

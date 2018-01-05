@@ -6,6 +6,7 @@ html, body {
     font-size: 15px;
     margin: 0;
     padding: 0;
+    background-color: #333;
 }
 
 /* fixed width for the entire menu */
@@ -14,10 +15,16 @@ html, body {
 }
 
 .container {
+    position: absolute;
     display: block;
+    background-color: #fff;
     width: 233px;
-    float: left;
+    height: 100%;
+    z-index: 50;
+    -webkit-transition: left ease-in-out .15s;
+            transition: left ease-in-out .15s;
 }
+
 
 /* remove bullet points and padding */
 .mainmenu, .submenu, .submenu ul {
@@ -149,28 +156,88 @@ html, body {
     margin-left: 10px;
 }
 
+#locationButton {
+    position: absolute;
+    top: 46px;
+    left: 9px;
+    z-index: 10;
+    display: none;
+}
+
+#hideLocationButton {
+    position: absolute;
+    top: 10px;
+    left: 236px;
+    z-index: 50;
+    display: none;
+    opacity: 0;
+    -webkit-transition: opacity ease-in-out .15s;
+            transition: opacity ease-in-out .15s;
+}
+
+@media (min-width: 320px) {
+    .container {
+        left: -233px;
+    }
+    #map {
+        left: 0;
+    }
+
+    .showList .container {
+        left: 0;
+        -webkit-transition: left ease-in-out .15s;
+                transition: left ease-in-out .15s;
+    }
+
+    #locationButton {
+        display: inline-block;
+    }
+
+    .showList #hideLocationButton {
+        display: inline-block;
+        opacity: 1;
+        -webkit-transition: opacity ease-in-out .15s;
+                transition: opacity ease-in-out .15s;
+    }
+}
+
+@media (min-width: 768px) {
+    .container {
+        left: 0;
+    }
+
+    #map {
+        left: 233px;
+    }
+
+    #locationButton {
+        display: none;
+    }
+}
+
+
 /* button styles borrowed from bootstrap */
 
 .btn {
-  display: inline-block;
-  padding: 6px 12px;
-  margin-bottom: 0;
-  font-size: 14px;
-  font-weight: normal;
-  line-height: 1.42857143;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: middle;
-  -ms-touch-action: manipulation;
-      touch-action: manipulation;
-  cursor: pointer;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-  background-image: none;
-  border: 1px solid transparent;
-  border-radius: 4px;
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+        touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
 }
 .btn:focus,
 .btn:active:focus,
@@ -178,44 +245,44 @@ html, body {
 .btn.focus,
 .btn:active.focus,
 .btn.active.focus {
-  outline: 5px auto -webkit-focus-ring-color;
-  outline-offset: -2px;
+    outline: 5px auto -webkit-focus-ring-color;
+    outline-offset: -2px;
 }
 .btn:hover,
 .btn:focus,
 .btn.focus {
-  color: #333;
-  text-decoration: none;
+    color: #333;
+    text-decoration: none;
 }
 .btn:active,
 .btn.active {
-  background-image: none;
-  outline: 0;
-  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
-          box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+    background-image: none;
+    outline: 0;
+    -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+            box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
 }
 .btn-default {
-  color: #333;
-  background-color: #fff;
-  border-color: #ccc;
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
 }
 .btn-default:focus,
 .btn-default.focus {
-  color: #333;
-  background-color: #e6e6e6;
-  border-color: #8c8c8c;
+    color: #333;
+    background-color: #e6e6e6;
+    border-color: #8c8c8c;
 }
 .btn-default:hover {
-  color: #333;
-  background-color: #e6e6e6;
-  border-color: #adadad;
+    color: #333;
+    background-color: #e6e6e6;
+    border-color: #adadad;
 }
 .btn-default:active,
 .btn-default.active,
 .open > .dropdown-toggle.btn-default {
-  color: #333;
-  background-color: #e6e6e6;
-  border-color: #adadad;
+    color: #333;
+    background-color: #e6e6e6;
+    border-color: #adadad;
 }
 .btn-default:active:hover,
 .btn-default.active:hover,
@@ -226,14 +293,14 @@ html, body {
 .btn-default:active.focus,
 .btn-default.active.focus,
 .open > .dropdown-toggle.btn-default.focus {
-  color: #333;
-  background-color: #d4d4d4;
-  border-color: #8c8c8c;
+    color: #333;
+    background-color: #d4d4d4;
+    border-color: #8c8c8c;
 }
 .btn-default:active,
 .btn-default.active,
 .open > .dropdown-toggle.btn-default {
-  background-image: none;
+    background-image: none;
 }
 
 textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"] {
@@ -267,6 +334,6 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
     -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
     box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
     -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
-    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+         -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+            transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 }
